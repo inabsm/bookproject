@@ -1,0 +1,77 @@
+#list_css {
+    text-align: left;
+    font-size: 25px;
+    z-index: 1;
+    list-style-type: none;
+    font-weight: bold;
+    position: absolute;
+    top: 35px;
+    left: 0;
+}
+
+#list_css:hover {
+    cursor: pointer;
+}
+
+
+li {
+    padding: 15px;
+    padding-left: 0;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    font-size: 20px;
+}
+
+.image_more {
+    text-align: center;
+    margin: 0;
+    z-index: 0;
+    padding: 0;
+    transition: all .3s ease;
+}
+
+#review{
+    border: 2px whitesmoke solid;
+    opacity: 0.8;
+}
+
+#review:hover{
+    opacity: 1;
+    background-color: whitesmoke;
+}
+
+.image_more:hover {
+    transform: scale(1.1);
+    transition: all .3s ease;
+
+}
+#heart:hover{
+    font-weight: bolder;
+}
+
+@media screen and (min-width: 350px) and (max-width: 450px){
+    #list_css {
+    text-align: center;
+    font-size: 25px;
+    list-style-type: none;
+    font-weight: bold;
+    position: absolute;
+    z-index: 0;
+    top: 100%;
+ }
+    #buy{
+        position: absolute;
+        top: 153%;
+        left: 40%;
+    }
+
+    #rent{
+        position: absolute;
+        top: 175%;
+        left:40%;
+    }
+}

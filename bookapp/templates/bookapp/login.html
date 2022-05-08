@@ -1,0 +1,16 @@
+{% extends 'bookapp/base.html' %}
+{% load static %}
+    Login
+{% block title %}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bookapp/form.css' %}">
+<div id="form_reg">
+    <form method="post" action="login">
+        {% csrf_token %}
+        {{ form|crispy }}<br>
+        <button class="btn btn-success" type="submit">Отправить</button>
+    </form>
+</div>
+{% endblock %}

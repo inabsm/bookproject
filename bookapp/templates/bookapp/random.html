@@ -1,0 +1,28 @@
+{% extends 'bookapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Profile
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bookapp/additional_info.css' %}">
+<body style="background-color: white; position: relative">
+    <a href="{% url 'allbook' %}" style="color: black; font-size: 25px;">Назад</a>
+            <p class="image_more"><img style="width: 530px; height: auto" src="{{ book_random.picture.url }}"  alt=""></p>
+        <strong><p class="content">Начало:</p><br></strong>
+        <p class="content">{{ book_random.contentbook|truncatewords:30 }}</p>
+<!--    <a href="{% url 'more_info' id %" style="margin-left: 30%" class="btn btn-primary">Подробнее</a>-->
+    <button class="btn btn-primary btn-sm" style="margin-left: 31.6%; margin-top: 5px;"><a href="{% url 'more_info' book_random.id %}" style=" color: white">Подробнее</a></button>
+
+    <main class="container">
+        <ul id="list_css" class="text-wrap">
+            <li>Название - {{ book_random.title }}</li>
+            <li>Автор - {{ book_random.author }}</li>
+            <li>Добавил - {{ book_random.creator }}</li>
+            <li>Цена - {{ book_random.price }} руб</li>
+            <li>Цена аренды - {{ book_random.price_rent }} руб/неделя</li>
+        </ul>
+    </main>
+</body>
+
+{% endblock %}

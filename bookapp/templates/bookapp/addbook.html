@@ -1,0 +1,23 @@
+{% extends 'bookapp/base.html' %}
+{% load static %}
+    Addbook
+{% block title %}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bookapp/form.css' %}">
+<body style="background-color: gray">
+    <a href="{% url 'allbook' %}" class="">Назад</a>
+    {% if request.user.is_authenticated  %}
+    <div id="form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}<br>
+            <button class="btn btn-success " type="submit">Добавить кунигу</button>
+        {% else %}
+            <p>Войди в аккаунт</p>
+        </form>
+    </div>
+    {% endif %}
+</body>
+{% endblock %}

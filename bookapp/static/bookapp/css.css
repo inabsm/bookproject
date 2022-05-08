@@ -1,0 +1,69 @@
+#body {
+    background: url('https://clck.ru/eSKVL');
+    margin: 0;
+    display: block;
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+    background-position: center center;
+}
+
+.Welcome_to_BookApp {
+    font-size: 72px;
+    font-family: "Corinthia";
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: center;
+}
+.iconbook{
+    text-align: center;
+    margin-top: 310px;
+    fill: grey;
+    padding: 0;
+}
+
+.svgbooktime{
+    width: 150px;
+}
+
+.svgbook{
+    margin-left: 0;
+    width: 150px;
+}
+
+.icon_book_buy{
+    color: grey;
+    text-align: center;
+    font-size: 30px;
+    margin-top: -58px;
+    margin-left: 150px;
+
+}
+
+.icon_book_buy:hover{
+    text-decoration: none;
+    color: grey;
+}
+
+.icon_book_rent{
+    color: grey;
+    margin-left: -150px;
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.icon_book_rent:hover{
+    text-decoration: none;
+    color: grey;
+
+}
+
+.a_icon{
+    color: grey;
+}
+
+.a_icon:hover{
+    text-decoration: none;
+    color: grey;
+}

@@ -1,0 +1,63 @@
+{% extends "bookapp/base.html" %}
+{% load static %}
+{% block title %}Your shopping cart{% endblock %}
+{% block content %}
+<body style="background-color: whitesmoke">
+<h1>Корзина</h1>
+            <div class="cart">
+                {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                    <p style="float: right; font-weight: bolder ;color: black; text-decoration-line: none">
+                        Товары: {{ total_items }} шт.
+                        ({{ cart.get_total_price }} руб)
+                    </p>
+                {% else %}
+                    <p>Ваша корзина пуста</p>
+                {% endif %}
+                {% endwith %}
+            </div>
+    <ul style="
+                list-style-type: none;
+                padding-left: 91px;
+                width: 335px;
+                background-color: white;
+                margin-left: 40%;
+
+                ">
+        {% for item in cart %}
+            {% with book=item.book %}
+            <div class="detail_cart"  style="border-bottom: 1px silver solid; width: 160px;">
+                    <li>
+                        <a href="{% url 'more_info' book.id %}">
+                            <img src="{{ book.picture.url }}" style=
+                                    "width: 150px; height: auto;  margin-left: 1px; margin-top: 10px;"
+                                 alt='err'>
+                        </a>
+                    </li>
+                    <li style="font-weight: bolder; font-size: 20px">{{ book }}</li>
+                    <form action="{% url 'cart:cart_add' book.id %}" method="post">
+                        {{ item.update_quantity_form.quantity }}
+
+                        <p>{{ item.update_quantity_form.update }}</p>
+                         <input type="submit" class="btn btn-primary btn-sm" value="Обновить количество">
+
+                        {% csrf_token %}
+                    </form>
+                    <p><li><a  class="btn btn-warning btn-sm" href="{% url 'cart:cart_remove' book.id %}">Удалить</a></li></p>
+                    <li class="num">Всего: {{ item.total_price }} руб</li>
+            </div>
+            {% endwith %}
+        {% endfor %}
+        <li class="total">
+            <td> Общая стоимость: </td>
+            <td colspan="4"></td>
+            <td class="num">{{ cart.get_total_price }} руб</td>
+        </li>
+    </ul>
+
+<div  style="margin-left: 40%" >
+    <p><a style="text-decoration: none; color: white; margin-left:1px" class="btn btn-danger btn-sm"  href="{% url 'allbook' %}" class="button light">Продолжить покупки</a></p>
+    <p><a href="#" style="margin-left: 1px" class="btn btn-danger btn-sm">Оформить</a></p>
+</div>
+</body>
+{% endblock %}

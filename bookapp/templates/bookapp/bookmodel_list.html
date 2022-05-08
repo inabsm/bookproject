@@ -1,0 +1,99 @@
+{% extends 'bookapp/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% include 'include/sidebar.html' %}
+<link rel="stylesheet" href="{% static 'bookapp/allbookbuy.css' %}">
+<body style="background-color: white; width: 100%; height: 100%; z-index: 1">
+    <header class="container mt-3">
+    <nav class="navbar-expand-lg">
+      <div id="divnav">
+        <ul class="navbar-nav">
+            <li class="navigation"><a class="nav-link" href="/">На главную</a></li>
+            <li class="navigation"><a class="nav-link" href="{% url 'random_book'%}">Случайная книга</a></li>
+            <li class="navigation"><a class="nav-link" href="{% url 'addbook' %}">Добавить книгу</a></li>
+            <li class="navigation"><a class="nav-link" href="#">О проекте</a></li>
+        </ul>
+      </div>
+    </nav>
+    </header>
+
+
+{% if request.user.is_authenticated  %}
+
+                {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                    <p style="
+                    float: right;
+                    padding-right: 90px;
+                    margin-top: -57px;
+                    font-weight: bolder;
+                    color: red;
+                    text-decoration-line: none">
+                       {{ total_items }}
+                    </p>
+                {% endif %}
+                {% endwith %}
+
+        <div class="dropdown">
+            <button class="btn dropdown-toggle font-weight-bold" data-easy-toggle="#dropdown" data-easy-class="show" data-easy-rcoe>
+                {{ request.user.username }}
+            </button>
+
+            <div id="dropdown" class="dropdown-menu">
+                <a href="{% url 'profile' %}" class="dropdown-link">Профиль</a>
+                <a href="/cart/" class="dropdown-link">Корзина ({{cart|length}})</a>
+                <a href="{% url 'logout' %}" class="dropdown-link">Выйти</a>
+            </div>
+        </div>
+{% endif %}
+{% if not request.user.is_authenticated  %}
+    <li>
+        <a href="{% url 'login' %}" class="login_allbook" style="">Вход</a>
+    </li>
+    <li>
+        <a href="{% url 'reg' %}" class="reg_allbook">Регистрация</a>
+    </li>
+{% endif %}
+
+    <main class="container mt-3">
+        {% for book in allbook %}
+            {% if book.picture %}
+            <div class="bookbuy">
+                <img style="height: 155px; width: 155px; margin-left: 35px; margin-top: 30px;" src="{{ book.picture.url }}"  alt="">
+                 <strong><p class="book_title">{{ book.title }}</p></strong>
+                <strong><p class="book_price">{{ book.price }} руб.</p></strong>
+
+
+                    <form action="{% url 'cart:cart_add' book.id %}" method="post">
+                        <p style="display: none">{{ cart_book_form }}</p>
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" style="margin-left: 31.6%; margin-top: 5px" type="submit">В корзину</button>
+                    </form>
+                <button class="btn btn-primary btn-sm" style="margin-left: 31.6%; margin-top: 5px"><a href="{% url 'more_info' book.id %}">Подробнее</a></button>
+
+            {% endif %}
+        </div>
+        {% endfor %}
+    </main>
+
+</body>
+<script>
+    /**
+ * EasyToggler 1.2.0
+ * Simple class switcher on web elements. JavaScript only.
+ * GitHub: https://github.com/rah-emil/easy-toggler
+ *
+ * Copyright 2020 Rah Emil
+ *
+ * Released under the MIT License
+ *
+ * Released: July 21, 2020
+ * Latest updates: July 21, 2021
+ */
+
+!function(){"use strict";document.addEventListener("click",function(t){const e=t.target.closest("[data-easy-toggle]");if(e){t.preventDefault();let a=e.getAttribute("data-easy-toggle"),s=e.getAttribute("data-easy-class");try{document.querySelectorAll("[data-easy-toggle]").forEach(t=>{t.hasAttribute("data-easy-parallel")||t===e||document.querySelector(t.getAttribute("data-easy-toggle")).classList.remove(t.getAttribute("data-easy-class"))}),document.querySelector(a).classList.toggle(s)}catch(t){console.warn("EasyToggler.js : Блок "+a+" не существует")}}if(!e){let e=document.querySelectorAll("[data-easy-rcoe]");Array.from(e).forEach.call(e,function(e){let a=e.getAttribute("data-easy-toggle"),s=e.getAttribute("data-easy-class");if(!t.target.closest(a))try{document.querySelector(a).classList.remove(s)}catch(t){console.warn("EasyToggler.js : Блок "+a+" не существует")}})}})}();
+</script>
+{% endblock %}

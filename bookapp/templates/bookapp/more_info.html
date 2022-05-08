@@ -1,0 +1,86 @@
+{% extends 'bookapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+{{ book_info.title }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bookapp/additional_info.css' %}">
+<body style="background-color: white; position: relative">
+    <a href="{% url 'allbook' %}" style="color: black; font-size: 25px;">Назад</a>
+    <main class="container">
+        <p class="image_more"><img style="width: 530px; height: auto" src="{{ book_info.picture.url }}"  alt=""></p>
+        <strong><p class="content">Начало:</p><br></strong>
+        <p class="content">{{ book_info.contentbook|truncatewords:30 }}</p>
+        <ul id="list_css" class="text-wrap">
+            <li>Название - {{ book_info.title }}</li>
+            <li>Автор - {{ book_info.author }}</li>
+            <li>Добавил - {{ book_info.creator }}</li>
+            <li>Жанры -
+                {% for genre in book_info.genres.all %}
+                    <i>{{ genre.name }}</i>
+                {% endfor %}</li>
+            <li>Цена - {{ book_info.price }} руб</li>
+
+        </ul>
+
+
+
+        {% if not request.user.is_authenticated %}
+            <p> Чтобы взамодействовать с книгой нужно авторизироваться </p>
+        {% else %}
+        <form action="{% url 'like_book' id %}" method='POST'>
+            {% csrf_token %}
+            <p>
+                <button style="" type="submit" id='heart' name="book_id" value="{{ book.id }}" class="btn btn-danger btn-sm">
+                    {{ total_likes }} - &#x1f9e1
+                </button>
+            </p>
+        </form>
+
+        <p class="price">{{ book_cart.price }}</p>
+        <form action="{% url 'cart:cart_add' book_cart.id %}" method="post">
+            {{ cart_book_form }}
+            {% csrf_token %}
+            <button class="btn btn-success" id='buy' style="float: left" type="submit">Купить</button>
+        </form>
+
+
+
+        <form action="{% url 'review' id %}" method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="contactcomment" class="editContent">
+                                 Отзыв
+                            </label>
+                            <textarea class="form-control border" rows="5" name="text"
+                                      id="contactcomment" required=""></textarea>
+                        </div>
+                        <div>
+
+
+
+                        </div>
+                        <button type="submit" class="btn btn-warning">
+                            Отправить
+                        </button>
+
+                      {% endif %}<br>
+            <p>Отзывы:</p>
+
+            {% for review in book_info.reviews_set.all %} <br>
+            <div id="review">
+                <p style="font-weight: bold">{{ review.user }}</p>
+
+
+                <p style="font-weight: bold">{{ review.text }}</p>
+                <p> {{ review.user_info }}</p>
+
+
+            </div>
+            {% endfor %}
+        </form>
+    </main>
+</body>
+
+{% endblock %}

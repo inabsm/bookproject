@@ -1,0 +1,29 @@
+{% extends 'bookapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Profile
+{% endblock %}
+{% block content %}
+<body>
+    <aside>
+
+    </aside>
+    <main>
+        <link rel="stylesheet" href="{% static 'bookapp/form.css' %}">
+        <a href="{% url 'allbook' %}" style="color: black;">Назад</a>
+        <div class="row my-3 p-3">
+            <img class="rounded-circle account-img" src="{{ user.profilemodel.avatar.url }} " style="cursor: pointer; width: 100px; height: 100px"/>
+        </div>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p style="">{{ form.username }}</p><br>
+                <p>{{ profile_form.avatar }}</p>
+                <button class="btn btn-success" style="margin-left: 5px" type="submit">Save</button><br>
+                <a href="{% url 'change_pass' %}" style="margin-left: 5px; margin-top: 5px" class="btn btn-success">Change password</a>
+            </form>
+
+    </main>
+</body>
+{% endblock %}
